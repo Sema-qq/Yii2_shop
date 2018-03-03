@@ -1,6 +1,9 @@
 <?php
 
+use app\models\Brand;
+use app\models\Category;
 use app\models\Product;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -23,15 +26,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+//            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'name',
-//            'category_id',
             'code',
             'price',
-            // 'brand_id',
-            // 'image',
+            [
+                'attribute' => 'category_id',
+                'value' => function($model){
+                    return $model->category->name;
+                },
+                'filter' => ArrayHelper::map(Category::find()->all(), 'id','name')
+            ],
+            [
+                'attribute' => 'brand_id',
+                'value' => function($model){
+                    return $model->brand->name;
+                },
+                'filter' => ArrayHelper::map(Brand::find()->all(), 'id','name')
+            ],
             // 'description:ntext',
              [
                  'attribute' => 'avialability',
@@ -73,6 +87,14 @@ $this->params['breadcrumbs'][] = $this->title;
                      Product::STATUS_PUBLISHED => 'Опубликован'
                  ]
              ],
+            [
+                'attribute' => 'image',
+                'format' => 'html',
+                'value' => function($model){
+                    return Html::img($model->getImage(), ['width' => 100]);
+                },
+                'filter' => false
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

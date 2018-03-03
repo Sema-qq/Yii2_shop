@@ -43,13 +43,13 @@ class User extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
+            'id' => 'Ид',
+            'name' => 'Имя',
             'email' => 'Email',
-            'password' => 'Password',
+            'password' => 'Пароль',
             'is_admin' => 'Is Admin',
-            'photo' => 'Photo',
-            'phone' => 'Phone',
+            'photo' => 'Фото',
+            'phone' => 'Телефон',
             'vk_id' => 'Vk ID',
         ];
     }

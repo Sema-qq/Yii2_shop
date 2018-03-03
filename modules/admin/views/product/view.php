@@ -16,6 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Фото', ['set-image', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('Категория', ['set-category', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('Производитель', ['set-brand', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -30,10 +33,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'category_id',
             'code',
             'price',
-            'brand_id',
+            [
+                'attribute' => 'category_id',
+                'value' => $model->category->name
+            ],
+            [
+                'attribute' => 'brand_id',
+                'value' => $model->brand->name
+            ],
             'description:ntext',
             [
                 'attribute' => 'avialability',

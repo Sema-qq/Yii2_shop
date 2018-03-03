@@ -30,6 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'sort_order',
             [
                 'attribute' => 'status',
+                'value' => function($model){
+                    return $model->status ? 'Опубликован' : 'Не опубликован';
+                },
                 'filter' => [
                     Category::STATUS_NOT_PUBLISHED => 'Не опубликован',
                     Category::STATUS_PUBLISHED => 'Опубликован'
