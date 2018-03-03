@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Brand;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -7,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\BrandSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Brands';
+$this->title = 'Производители';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="brand-index">
@@ -16,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Brand', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать производителя', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -26,8 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'sort_order',
-            'status',
+//            'sort_order',
+            [
+                'attribute' => 'status',
+                'filter' => [
+                    Brand::STATUS_NOT_PUBLISHED => 'Не опубликован',
+                    Brand::STATUS_PUBLISHED => 'Опубликован',
+                ]
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

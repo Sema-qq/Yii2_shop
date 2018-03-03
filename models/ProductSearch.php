@@ -35,9 +35,7 @@ class ProductSearch extends Product
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -72,7 +70,6 @@ class ProductSearch extends Product
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'image', $this->image])
             ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;

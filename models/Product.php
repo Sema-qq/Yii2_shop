@@ -22,6 +22,22 @@ use Yii;
  */
 class Product extends \yii\db\ActiveRecord
 {
+    /** доступность товара на складе: 1 - есть, 0 - нет */
+    const IS_AVIALABLE = 1;
+    const IS_NOT_AVIALABLE = 0;
+
+    /** Новый товар: 1 - да, 0 - нет */
+    const IS_NEW = 1;
+    const IS_NOT_NEW = 0;
+
+    /** Реомендуемый товар: 1 - да, 0 - нет */
+    const IS_RECOMMENDED = 1;
+    const IS_NOT_RECOMMENDED = 0;
+
+    /**Статус товара к публикации: 1 - да, 0 - нет*/
+    const STATUS_PUBLISHED = 1;
+    const STATUS_NOT_PUBLISHED = 0;
+
     /**
      * @inheritdoc
      */
@@ -49,18 +65,18 @@ class Product extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'category_id' => 'Category ID',
-            'code' => 'Code',
-            'price' => 'Price',
-            'avialability' => 'Avialability',
-            'brand_id' => 'Brand ID',
-            'image' => 'Image',
-            'description' => 'Description',
-            'is_new' => 'Is New',
-            'is_recommended' => 'Is Recommended',
-            'status' => 'Status',
+            'id' => 'Ид',
+            'name' => 'Название',
+            'category_id' => 'Категория',
+            'code' => 'Код',
+            'price' => 'Цена',
+            'avialability' => 'Наличие на складе',
+            'brand_id' => 'Производитель',
+            'image' => 'Фото',
+            'description' => 'Описание',
+            'is_new' => 'Новый',
+            'is_recommended' => 'Рекомендуемый',
+            'status' => 'Статус',
         ];
     }
 }

@@ -14,6 +14,10 @@ use Yii;
  */
 class Brand extends \yii\db\ActiveRecord
 {
+    /**Статусы производителя к публикации: 1 - да, 0 - нет*/
+    const STATUS_PUBLISHED = 1;
+    const STATUS_NOT_PUBLISHED = 0;
+
     /**
      * @inheritdoc
      */
@@ -39,10 +43,10 @@ class Brand extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
+            'id' => 'Ид',
+            'name' => 'Название',
             'sort_order' => 'Sort Order',
-            'status' => 'Status',
+            'status' => 'Статус',
         ];
     }
 }

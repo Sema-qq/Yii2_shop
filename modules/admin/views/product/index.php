@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Product;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -7,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Products';
+$this->title = 'Товары';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
@@ -16,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать товар', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -26,16 +27,52 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'category_id',
+//            'category_id',
             'code',
             'price',
-            // 'avialability',
             // 'brand_id',
             // 'image',
             // 'description:ntext',
-            // 'is_new',
-            // 'is_recommended',
-            // 'status',
+             [
+                 'attribute' => 'avialability',
+                 'value' => function($model){
+                     return $model->status ? 'Есть в наличии' : 'Отсутствует на складе';
+                 },
+                 'filter' => [
+                     Product::IS_NOT_AVIALABLE => 'Отсутствует на складе',
+                     Product::IS_AVIALABLE => 'Есть в наличии'
+                 ]
+             ],
+             [
+                 'attribute' => 'is_new',
+                 'value' => function($model){
+                     return $model->is_new ? 'Да' : 'Нет';
+                 },
+                 'filter' => [
+                     Product::IS_NOT_NEW => 'Нет',
+                     Product::IS_NEW => 'Да'
+                 ]
+             ],
+             [
+                 'attribute' => 'is_recommended',
+                 'value' => function($model){
+                     return $model->is_recommended ? 'Да' : 'Нет';
+                 },
+                 'filter' => [
+                     Product::IS_NOT_RECOMMENDED => 'Нет',
+                     Product::IS_RECOMMENDED => 'Да'
+                 ]
+             ],
+             [
+                 'attribute' => 'status',
+                 'value' => function($model){
+                     return $model->status ? 'Опубликован' : 'Не опубликован';
+                 },
+                 'filter' => [
+                     Product::STATUS_NOT_PUBLISHED => 'Не опубликован',
+                     Product::STATUS_PUBLISHED => 'Опубликован'
+                 ]
+             ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
