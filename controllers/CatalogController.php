@@ -61,10 +61,13 @@ class CatalogController extends Controller
 
     public function actionView($id)
     {
+        $product = Product::findOne($id);
         //категории
         $categories = Category::getCategories();
         //производители
         $brands = Brand::getBrands();
-        return $this->render('single');
+        //рекомендуемые товары
+        $recommendedProducts = Product::getRecommendedProduct();
+        return $this->render('single', compact('product','categories', 'brands', 'recommendedProducts'));
     }
 }
