@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\Brand;
+use app\models\Category;
+use app\models\Product;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -54,16 +57,6 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
-
-    /**
      * Login action.
      *
      * @return string
@@ -81,18 +74,6 @@ class SiteController extends Controller
         return $this->render('login', [
             'model' => $model,
         ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return string
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
     }
 
     /**
@@ -121,5 +102,24 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    /**
+     * Главная страница сайта
+     * @return string
+     */
+    public function actionIndex()
+    {
+        //товары с лимитом для главной
+        $products = Product::getProductByIndex();
+        //категории
+        $categories = Category::getCategories();
+        //производители
+        $brands = Brand::getBrands();
+        //рекомендуемые товары
+        $recommendedProducts = Product::getRecommendedProduct();
+        return $this->render('index', compact(
+            'products', 'categories','brands','recommendedProducts'
+        ));
     }
 }

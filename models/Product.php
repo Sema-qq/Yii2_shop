@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\data\Pagination;
 
 /**
  * This is the model class for table "products".
@@ -163,5 +164,47 @@ class Product extends \yii\db\ActiveRecord
     public function getImage()
     {
         return !empty($this->image) ? '/uploads/'.$this->image : '/no-image.png';
+    }
+
+    /**
+     * Рекомендуемые товары, разрешенные к публикации
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function getRecommendedProduct()
+    {
+        return self::find()->where(['status' => self::STATUS_PUBLISHED])
+            ->andWhere(['is_recommended' => self::IS_RECOMMENDED])
+            ->all();
+    }
+
+    /**
+     * Товары для главной разрешенные к публикации с лимитом 6 штук
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function getProductByIndex($limit = 6)
+    {
+        return self::find()->where(['status' => self::STATUS_PUBLISHED])->limit($limit)->all();
+    }
+
+    /**
+     * Все товары с пагинацией
+     * @param int $pageSize
+     * @return mixed
+     */
+    public static function getAll($pageSize = 6)
+    {
+        // build a DB query to get all articles with status = 1
+        $query = self::find()->where(['status' => self::STATUS_PUBLISHED]);
+        // get the total number of articles (but do not fetch the article data yet)
+        $count = $query->count();
+        // create a pagination object with the total count
+        $pagination = new Pagination(['totalCount' => $count,'pageSize'=>$pageSize]);
+        // limit the query using the pagination and retrieve the articles
+        $products = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+        $data['products'] = $products;
+        $data['pagination'] = $pagination;
+        return $data;
     }
 }

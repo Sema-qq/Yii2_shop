@@ -19,6 +19,8 @@ class ShopAsset extends AssetBundle
     ];
     public $js = [
         '/public/js/jquery.js',
+//        'public/js/jquery.cycle2.min.js',
+//        'public/js/jquery.cycle2.carousel.min.js',
         '/public/js/bootstrap.min.js',
         '/public/js/jquery.scrollUp.min.js',
         '/public/js/price-range.js',
